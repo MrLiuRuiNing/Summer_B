@@ -1,0 +1,139 @@
+主  题：日报
+汇报人：何米娜
+日  期：2018年7月23日 星期一
+内  容：
+1.今日学习了的内容：
+1）面向对象及三大特性
+2）多态的实现原理
+3）两道算法题
+4）50道选择题
+5）一部分的MyBatis的原理知识
+
+2.没有解决的问题：
+1）MyBatis的原理知识还差些
+
+3.明天的学习计划：
+1）object的源码学习（每个方法的原理和使用）
+2)MyBatis的原理知识和部分代码的实现
+
+4.学习任务完成度： （90）  %[注：0% ~ 100%]
+5.对自己今天学习的满意度：（9）分 [注：1-10分]
+6.对今天的学习做一句话的总结：
+	继续努力
+附录：
+算法1：
+题目：
+package com.lis.tnode;
+
+public class Node {
+	 public Integer data;    //存放节点值  
+	 public  Node next;      //后继节点的引用 ,将data，next定义为public类型，就不需要get，set方法了
+     public Node(){  
+         this(null,null);    //无参时构造函数  
+     }  
+     public Node(Integer data){  //带一个参数时的构造函数  
+         this.data=data;  
+     }  
+     public Node(Integer data,Node next){    //带两个参数时构造函数  
+         this.data=data;  
+         this.next=next;  
+     }
+     
+}
+
+
+package com.lis.tnode;
+import java.util.ArrayList;
+import java.util.Stack;
+/**
+ * 输入一个链表，按链表值从尾到头的顺序返回一个ArrayList
+ * @author Lenovo
+ * 此算法可以利用栈的先进后出原则，将一个链表逆序输出，在用ArrayList接收，输出。
+ */
+
+public class ChangeArray {
+	 static Node entry=null;//当前结点
+	 static Node head=null;//头结点
+ 	public void add(Integer obj){
+  		Node node=new Node(obj,null);
+  		if(head==null){
+  			head=node;
+  			entry=node;
+  		}else{
+  			entry.next=node;//当前结点指向新的结点
+  			entry=node;//当前结点向后移动
+  		}
+ 	}
+	
+	public static void printList(ChangeArray no){
+		
+		for(Node no1 = head;no1 != null;no1=no1.next){
+			System.out.println(no1.data);
+		}
+	}
+
+	public static ArrayList<Integer> printListFromTailToHead(ChangeArray no){
+		//若按照建立链表的方式；注意此时传的no指向最后一个结点。
+		 Stack<Integer> sta =new Stack<Integer>();
+	        while(head != null){
+	        	sta.push(head.data);
+	            head=head.next;
+	        }
+	        ArrayList<Integer> li=new ArrayList<Integer>();
+	        while(!sta.isEmpty()){
+	            li.add(sta.pop());
+	        }
+		    return li;
+	}
+	
+	public static void main(String[] args) {
+		ChangeArray no = new ChangeArray();
+	    no.add(1);
+	    no.add(2);
+	    no.add(3);
+	    no.add(4);
+	    no.add(5);
+	    ArrayList<Integer> list=new ArrayList<Integer>();
+//	    no.printList(no);
+	    list=printListFromTailToHead(no);
+	    System.out.println(list);
+	}
+}
+
+算法2：
+题目：
+package com.str.ing;
+/**
+ * 请实现一个函数，将一个字符串中的每个空格替换成“%20”。
+ * 例如，当字符串为We Are Happy.则经过替换之后的字符串为We%20Are%20Happy。
+ * @author Lenovo
+ * String对象.charAt(index)//返回指定索引的字符值
+ * StringBuilder对象.append(string对象)//将string对象添加到stringBuilder对象
+ */
+public class Space {
+	public static String replace(String s1){
+		if(s1==null){
+			return null;
+		}
+		StringBuilder s3=new StringBuilder();
+		String s4="%20";
+	    for(int i=0;i<s1.length();i++){
+			if(s1.charAt(i)==' '){
+				s3.append(s4);
+			}else{
+				s3.append(s1.charAt(i));
+			}
+		}
+		return s3.toString();
+	}
+	
+	public static void main(String[] args) {
+		//String s1="We Are Happy";
+		String sa=null;
+		String s2=null;
+		//s2=replace(s1);
+		s2=replace(sa);
+		System.out.println(s2);
+	}
+}
+【学习内容真实可靠，给自己的评分和完成度客观真实，不谦虚，不夸大】
