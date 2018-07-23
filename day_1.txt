@@ -1,0 +1,61 @@
+日报格式:
+主  题：日报
+汇报人：杨明
+日  期：2018年7月24日 星期二
+内  容：
+1.今日学习了的内容：
+1）初步熟悉了shiro的框架和工作体系，Authentication用来身份认证，验证用户是不是拥有相应的身份；Authorization用来授权，验证某个已认证的用户是否拥有某个权限；类似还有Session Manager会话管理、Cryptography加密、Caching缓存、Remember Me等。
+2）写了牛客网的一道算法题
+3）通过看视频了解了Linux的基础配置，搭起了基本的Linux虚拟机环境
+2.没有解决的问题：
+1）学习shiro过程中要先搭一个maven项目，然后发现搭一个maven项目并不容易，搞了半天也没搭起来，虽然网上教程很多，明天继续搭呗
+3.明天的学习计划：
+1）首先就是把maven项目搭起来，把shiro配置好
+2）Linux虚拟机也配置好了，明天就开始学习一些基础的指令
+3）牛客网算法题日常一道，加选择题若干
+4.学习任务完成度： （80）%[注：0% ~ 100%]
+5.对自己今天学习的满意度：（7）分 [注：1-10分]
+6.对今天的学习做一句话的总结：
+一天下来发现自己对自己的计划还是有点力不从心
+附录：
+算法1：
+题目： n 只奶牛坐在一排，每个奶牛拥有 ai 个苹果，现在你要在它们之间转移苹果，使得最后所有奶牛拥有的苹果数都相同，每一次，你只能从一只奶牛身上拿走恰好两个苹果到另一个奶牛上，问最少需要移动多少次可以平分苹果，如果方案不存在输出 -1。
+{/**
+ * 总体思路：
+ * 抓住两个返回-1的情况：
+ * 1、苹果总数不能被奶牛总数整除时方案不存在
+ * 2、至少有一只奶牛最初苹果数与均分后应有苹果数奇偶性不统一时方案不存在
+ * 因为每次只能移动固定数量两个，所以数字的奇偶性一定是不会发生改变的
+ * 另外不要把问题想的复杂，只需要计算最初数量比应得平均数量少时，需要移动几次才可以达到平均数量
+ * 抓住这几点就可以轻松解决问题了
+ *
+ */
+public class DevideApples {
+    public int slove(int n,List<Integer> list){
+        int cnt = 0;
+        int sum = 0;
+        int average = 0;
+        for (int i = 0;i<n;i++)
+            sum = sum + list.get(i);//计算所有苹果总数
+        if (sum%n!=0)//如果苹果总数不能被奶牛个数整除，则说明方案不存在，直接返回-1
+            return -1;
+        average = sum/n;//计算平分苹果后的每只奶牛应有的苹果数
+        for (int i = 0;i<n;i++){
+            if (list.get(i)%2!=average%2)//遍历list，如果发现有任何一只奶牛最初的苹果数与均分后应有的苹果数奇偶性不统一，说明方案不存在
+                return -1;
+            if (list.get(i)<=average)//这里只需要计算最初数目比平均数目低的需要移动多少次才能达到平均值即可
+                cnt = cnt+(average-list.get(i))/2;
+        }
+        return cnt;
+    }
+    public static void main(String [] args){
+        Scanner scanner = new Scanner(System.in);
+        DevideApples devideApples = new DevideApples();
+        List<Integer> list = new ArrayList<Integer>();
+        int n = scanner.nextInt();//输入第一行，n为奶牛个数
+        for (int i = 0;i<n;i++)
+            list.add(scanner.nextInt());//输入第二行，共n个数，代表相应每一只奶牛所拥有的苹果数量初始值
+        System.out.println(devideApples.slove(n,list));//调用方法，打印结果，第三行输出最后结果
+    }
+}}
+【学习内容真实可靠，给自己的评分和完成度客观真实，不谦虚，不夸大】
