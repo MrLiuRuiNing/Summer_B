@@ -1,0 +1,46 @@
+主  题：日报
+汇报人：刘睿宁
+日  期：2018年7月23日 星期一
+内  容：
+1.	今日学习了的内容：
+1）	常用的Linux文件命令
+2）	Linux目录文件及作用
+3）	Centos和Ubuntu 中对SSH服务与FTP服务的安装
+4）	通过SecureCRT和FileZilla远程对Linux进行控制和文件操作
+2.	没有解决的问题：
+1）命令学习完但并不能完全准确记住应用
+2）pclint在source insight中没有配置成功
+3.	明天的学习计划：
+1）练习Linux文件命令
+2）熟练掌握vim编辑器的使用
+4.学习任务完成度： （60）%[注：0% ~ 100%]
+5.对自己今天学习的满意度：（8）分 [注：1-10分]
+6.对今天的学习做一句话的总结：状态很好，但是练的不够
+附录：
+算法：
+题目：合并两个升序链表
+public class ListNode {
+	    int val;
+	    ListNode next = null;
+
+	    ListNode(int val) {
+	        this.val = val;
+	    }
+	}
+	public ListNode Merge(ListNode list1,ListNode list2) {
+	       if(list1 == null) {
+	           return list2;
+	       } 
+	       if(list2 == null) {
+	           return list1;
+	       } 
+	       ListNode s = null;
+	        if(list1.val < list2.val) {
+	             s = list1;
+	           s.next =  Merge(list1.next, list2);
+	        } else if(list1.val >= list2.val) {
+	            s = list2;
+	            s.next = Merge(list1, list2.next);
+	        }
+	        return s;
+	    }

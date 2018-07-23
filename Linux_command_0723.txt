@@ -1,0 +1,65 @@
+命令格式：命令 [-选项] [参数]  eg: ls -la /etc                reboot 重启  shutdown -r now
+说明：1.个别命令使用不遵循此格式  2.当有多个选项时，可以写在一起， 3.简化选项与完整选项  -a等于-all
+
+
+
+vi编辑器:  浏览模式（看代码 d可以删除） ->用“:”切换到 底部命令行模式（wq 保存（w）并退出(q)  q！ 强制退出） <--> 用esc切换到浏览模式 用i可以切换成编辑模式 编辑模式    google装xxnet插件可以翻墙
+
+centos用户提权：sudo -i    su root      查看端口：netstat -ntlp
+
+开启ssh服务：
+    ssh服务的监听端口号为22  通过 lsof -i :22 来查看是否开启ssh服务 若输入后没有任何内容说明没有开启
+    apt-get install openssh-server  安装openssh 之后就可以远程连接了，centos默认安装了openssh
+
+开启ftp服务：
+	ftp服务的端口号为21  通过 lsof -i :21 来查看是否开启ftp服务 若输入后没有任何内容说明没有开启
+        apt-get install vsftpd     centos:yum
+
+Linux下开发步骤：
+	首先，在windows下使用source insight编写代码，使用notepad++编写makefile  shell等脚本
+	使用ftp传入Linux进行编译  使用gdb进行调试程序
+
+ifconfig eth0:1 192.168.1.3  设置虚拟网卡，一块真实网卡可设置多个虚拟地址，只需改变:后面的数字
+
+
+文件操作命令：
+
+ls  英文原意：list 显示目录文件 所在路径：/bin/ls  语法： ls [-ald] [文件或目录]  -a 显示所有文件，包括隐藏文件   -l  详细信息显示   -d  查看目录属性 -h  人性化  -i  显示每个文件唯一id
+Linux中以点(.)开头的文件为隐藏文件
+           文件计数  所属者 所属组 文件大小  最后一次修改时间  文件名
+drwxr-xr-x.   2      root1   root1  4096     Jun 29 04:32      Desktop
+-文件类型 （d:目录  l:link软链接 -:二进制文件）  r读 w写 x执行
+
+ clear  清屏   ctrl+l 快捷键清屏   ctrl+c 终止正在执行的命令
+
+mkdir  目录处理命令 创建新目录(文件夹) -p 递归创建 语法： mkdir -p [目录名]  eg: mkdir /tmp/Liu
+	注：不加-p是没有办法在不存在的文件夹下创建新目录的
+cd    shell内置命令  用于切换目录  语法：cd [目录]  eg:cd .. 回到上一级目录  cd /tmp/japan  切换到指定目录  .表示当前目录
+pwd   显示当前目录  /bin/pwd  语法：pwd
+rmdir  删除空目录   /bin/rmdir 语法：rmdir [目录名]  eg: rmdir /tem/Liu
+cp     复制文件或目录  /bin/cp  语法：cp -rp [原文件或目录..][目标目录] -r 复制目录  -p保留文件属性  copy
+	eg: cp -r /tmp/Liu /root   将目录/tmp/Liu复制到目录/root下    
+	    cp -r /tmp/Liu /root/tutu.18+  将目录/tmp/Liu复制到目录/root下,并改名为tutu.18+
+mv     剪切文件、改名 /bin/mv  语法：mv [原文件或目录][目标目录]  move
+	eg: mv /tmp/Liu /root  将目录/tmp/Liu剪切到目录/root下  mv /tmp/Liu /root/tutu  将目录/tmp/Liu剪切到目录/root下,改名为tutu   mv tutu liu   将当前目录下的tutu文件改名为liu
+rm    删除文件   /bin/rm   语法：rm -rf[文件或目录]  -r 删除目录  -f 强制执行  remove   危险！！！： rm -rf /*
+文件处理命令：
+touch  创建空文件  /bin/touch  语法：touch[文件名]  eg:$ touch love.list   touch "program files"(不建议使用)
+cat    显示文件内容 -n 显示行号 /bin/cat 语法：cat[文件名] eg: $cat -n /etc/issue
+tac    反向显示文件内容
+more   分页显示文件内容 /bin/more 语法：more[文件名] (空格)或f 翻页  回车换行 q/Q 退出  eg: $more /etc/services
+	进入more浏览模式后，空格或f可以一页一页翻页，使用回车一行一行看，使用q/Q退出  more无法向上翻页
+less   分页显示文件内容（可向上翻页） /user/bin/less  语法：less[文件名]  eg: less /etc/services
+	空格或f可以一页一页翻页，使用回车一行一行看,pageup一页一页向上翻，上箭头一行一行向上翻,按/进行搜索，n继续查找下一个  next
+head   显示文件前面几行 -n指定行数 /user/bin/head  语法：head[文件名]   默认为10行   eg:$head -n 20 /etc/services
+tail   显示文件后面几行 -n指定行数 /user/bin/tail  语法：tail[文件名]   默认为10行   eg:$tail -n 20 /etc/services   -f 动态显示文件末尾（相当于实时监听）
+
+链接命令：
+ln  生成链接文件 /bin/ln 语法：ln -s [原文件][目标文件]   -s 用来创建软链接
+   eg: $ln -s /etc/issue /tmp/issue.soft       创建文件/etc/issue的软链接/tmp/issue.soft
+	$ln /etc/issue  /tmp/issue.hard        创建文件/etc/issue的硬链接/tmp/issue.hard
+
+
+
+
+
