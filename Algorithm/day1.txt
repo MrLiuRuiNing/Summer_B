@@ -1,0 +1,154 @@
+1、合并区间
+题目描述提示帮助提交记录社区讨论阅读解答
+给出一个区间的集合，请合并所有重叠的区间。
+
+示例 1:
+
+输入: [[1,3],[2,6],[8,10],[15,18]]
+输出: [[1,6],[8,10],[15,18]]
+解释: 区间 [1,3] 和 [2,6] 重叠, 将它们合并为 [1,6].
+示例 2:
+
+输入: [[1,4],[4,5]]
+输出: [[1,5]]
+解释: 区间 [1,4] 和 [4,5] 可被视为重叠区间。
+/**
+ * Definition for an interval.
+ * public class Interval {
+ *     int start;
+ *     int end;
+ *     Interval() { start = 0; end = 0; }
+ *     Interval(int s, int e) { start = s; end = e; }
+ * }
+ */
+class Solution {
+    public List<Interval> merge(List<Interval> intervals) {
+        if(intervals==null||intervals.size()<=1){
+            return intervals;
+        }
+        Integer []start =new Integer[intervals.size()];
+        Integer []end =new Integer[intervals.size()];
+        List<Interval> res=new ArrayList<Interval>();
+        int len=intervals.size();
+        for(int i=0;i<len;i++){
+            start[i]=intervals.get(i).start;
+            end[i]=intervals.get(i).end;
+        }
+        for(int i=0;i<len;++i){
+            for(int j=0;j<len;++j){
+                if(j!=i&&end[j]!=null&&start[i]<=end[j]&&end[i]>=start[j]){
+                    end[j]=end[i]>end[j]?end[i]:end[j];
+                    start[j]=start[i]<start[j]?start[i]:start[j];
+                    start[i]=null;
+                    end[i]=null;
+                    break;
+                }
+                
+            }
+        }
+        
+        for(int i=0;i<len;++i){
+            if(start[i]!=null){
+                Interval re=new Interval(start[i],end[i]);
+                res.add(re);
+            }
+        }
+        return res;
+    }
+}
+2. 最大子序和
+题目描述提示帮助提交记录社区讨论阅读解答
+给定一个整数数组 nums ，找到一个具有最大和的连续子数组（子数组最少包含一个元素），返回其最大和。
+
+示例:
+
+输入: [-2,1,-3,4,-1,2,1,-5,4],
+输出: 6
+解释: 连续子数组 [4,-1,2,1] 的和最大，为 6。
+class Solution {
+    public int maxSubArray(int[] nums) {
+        int sum=0;
+        int max=nums[0];
+        for(int i=0;i<nums.length;++i){
+            sum+=nums[i];
+            max=max<sum?sum:max;
+            if(sum<=0){
+                sum=0;
+            }
+        }
+        return max;
+    }
+}
+3、 螺旋矩阵
+题目描述提示帮助提交记录社区讨论阅读解答
+给定一个包含 m x n 个元素的矩阵（m 行, n 列），请按照顺时针螺旋顺序，返回矩阵中的所有元素。
+
+示例 1:
+
+输入:
+[
+ [ 1, 2, 3 ],
+ [ 4, 5, 6 ],
+ [ 7, 8, 9 ]
+]
+输出: [1,2,3,6,9,8,7,4,5]
+示例 2:
+
+输入:
+[
+  [1, 2, 3, 4],
+  [5, 6, 7, 8],
+  [9,10,11,12]
+]
+输出: [1,2,3,4,8,12,11,10,9,5,6,7]
+class Solution {
+    public List<Integer> res =new ArrayList<Integer>();
+    public List<Integer> spiralOrder(int[][] matrix) {
+        if(matrix!=null&&matrix.length>0){          
+            int m=matrix.length/2;
+            int n=matrix[0].length;
+            matr(matrix);
+        }
+        return res;
+    }
+    private void matr(int[][] num) {
+		int tr=0,tc=0,dr=num.length-1,dc=num[0].length-1;	
+		while(tr<=dr&&tc<=dc) {
+			printEdge(num, tr++,tc++, dr--, dc--);
+		}
+		
+	}
+	private void printEdge(int[][] num, int tr, int tc, int dr, int dc) {
+		if(tr==dr) {
+			for(int i=tc;i<=dc;++i) {
+				res.add(num[tr][i]);
+			}
+		}
+		else if(tc==dc) {
+			for(int i=tr;i<=dr;++i) {
+				res.add(num[i][tc]);
+			}
+		}
+		else {
+			int curR=tr;
+			int curC=tc;
+			while(curC<dc) {
+				res.add(num[tr][curC]);
+				curC++;
+			}
+			while(curR<dr) {
+				res.add(num[curR][dc]);
+				curR++;
+			}
+			while(curC>tc) {
+				res.add(num[dr][curC]);
+				curC--;
+			}
+			while(curR>tr) {
+				res.add(num[curR][tc]);
+				curR--;
+			}
+		}
+	
+	}
+}
