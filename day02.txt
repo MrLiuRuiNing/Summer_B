@@ -1,0 +1,79 @@
+日报格式:
+主  题：日报
+汇报人：陈鑫
+日  期：2018年7月24日 星期二
+内  容：
+1.今日学习了的内容：
+1）Mybatis的深化学习
+2）三个小时Linux视频
+3）两道算法题
+2.没有解决的问题：
+1）
+3.明天的学习计划：
+1）继续学习Mybatis，强化学习
+2）学习Linux的基本指令（一到两小时的视频，一小时的练习）
+3）两道算法题
+4）看Sring源码
+4.学习任务完成度： （80%）%[注：0% ~ 100%]
+5.对自己今天学习的满意度：（8）分 [注：1-10分]
+6.对今天的学习做一句话的总结：成功在于坚持，依然坚信，如果你付出了，一定会有回报的。
+附录：
+算法1：剑指Offer
+题目：（位运算）输入一个整数，输出该数二进制表示中1的个数。其中负数用补码表示。
+{代码}
+public class Solution {
+    public static int NumberOf1(int n) {
+        int count = 0;
+        while(n != 0){
+            count += n&1;       // 最低位若是1，则加1
+            count = count>>>1; // 使用无符号右移，忽略正负（负数的原码和补码的1个数是一样的）
+        }
+        return count;
+    }
+    public static void main(String[] args) {
+
+        System.out.println(Solution.NumberOf1(-2));
+    }
+}
+算法2：LeetCode
+题目：Given a binary tree, find its minimum depth.The minimum depth is the number of nodes along the shortest path from the root node down to the nearest leaf node.
+{代码}
+import java.util.Stack;
+/**
+ * 注意题意是：后缀式
+ * 还有就是字符类型向int型的转换Integer.valueOf（String str）
+ */
+public class Solution {
+    public static int evalRPN(String[] tokens) {
+        int length = tokens.length;
+        Stack<Integer> stack = new Stack();
+        int result = 0;
+        for(int i=0; i<length; ++i){
+            if(tokens[i] == "+" || tokens[i] == "-" ||tokens[i] == "*" ||tokens[i] == "/" ){
+                switch(tokens[i]) {
+                    case "+":
+                        stack.push(result = Integer.valueOf((Integer) stack.pop()) + Integer.valueOf((Integer) stack.pop()));
+                        break;
+                    case "-":
+                        stack.push(result = Integer.valueOf((Integer) stack.pop()) - Integer.valueOf((Integer) stack.pop()));
+                        break;
+                    case "*":
+                        stack.push(result = Integer.valueOf((Integer) stack.pop()) * Integer.valueOf((Integer) stack.pop()));
+                        break;
+                    case "/":
+                        stack.push(result = Integer.valueOf((Integer) stack.pop()) / Integer.valueOf((Integer) stack.pop()));
+                        break;
+                }
+            }else{
+                stack.push(Integer.parseInt(tokens[i]));
+            }
+        }
+        return result;
+    }
+
+    public static void main(String[] args) {
+        String arr[] = {"2", "1", "+", "3", "*"};
+        System.out.println(evalRPN(arr));
+    }
+}
+【学习内容真实可靠，给自己的评分和完成度客观真实，不谦虚，不夸大】
