@@ -1,0 +1,24 @@
+必须掌握的知识：
+	java基础必须再进行强化
+	数据库
+	Servlet
+	Mybatis
+	MVC
+	Spring
+	Linux
+	TCP/IP
+	JVM
+	Redis
+	设计模式
+	集合
+	HTTP
+	线程
+	NIO
+技能：
+	剑指算法题每天都要刷两道
+	牛客笔试题每天尽量多刷一点
+	八大排序非常熟练
+	github管理
+	
+	
+	
