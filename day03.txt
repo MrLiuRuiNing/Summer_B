@@ -1,0 +1,208 @@
+日报格式:
+主  题：日报
+汇报人：陈鑫
+日  期：2018年7月25日 星期三
+内  容：
+1.今日学习了的内容：
+1）Mybatis的深化学习
+2）五个小时Linux视频加一小时练习
+3）两道算法题
+4）学习了八大排序，尤其对快速排序又学习了一个新的优化（荷兰国旗）
+2.没有解决的问题：
+1）String没有看
+3.明天的学习计划：
+1）继续学习Mybatis，强化学习
+2）学习Linux的基本指令（两小时的视频，一小时的练习）
+3）两道算法题
+4）学习Spring
+4）看String源码
+4.学习任务完成度： （70%）%[注：0% ~ 100%]
+5.对自己今天学习的满意度：（7）分 [注：1-10分]
+6.对今天的学习做一句话的总结：成功在于坚持，依然坚信，如果你付出了，一定会有回报的。
+附录：
+算法1：剑指Offer
+题目：乘方问题：给定一个double类型的浮点数base和int类型的整数exponent。
+{代码}
+public class Power {
+	 /*
+	  *  乘方问题：给定一个double类型的浮点数base和int类型的整数exponent。
+	  *  求base的exponent次方。
+	  */
+	
+	public static double solution01(double base, int exponent) {
+    	/*
+    	 * 方法1：简单算法
+    	 * 时间复杂度：O(n)
+    	 * 运行时间： 51 ms 占用内存：10568K
+    	 */
+    	
+    	double result = 1.0;
+    	if(base == 0)	// 0的任意次方都为0
+    		return 0;
+    	if(base == 1 || exponent == 0) // 1的任意整数次方都等于1。除开0外任何数的0次方都等于1
+    		return 1;
+    	if(exponent == 0) 
+    		return 1;
+    	
+    	// 判断exponent的正负
+    	if(exponent >= 0) {
+    		for(int i=0; i<exponent; ++i) {  // 累乘
+    			result *= base;
+    		}
+    		return result;
+    	}
+    	else {
+    		exponent *= -1;
+    		for(int i=0; i<exponent; ++i) {  // 累乘
+    			result *= base;
+    		}
+    		return 1.0/result;
+    	}
+        
+    }
+	public static double solution(double base, int exponent) {
+    	/*
+    	 * 方法2：分治法解决乘方问题
+    	 * 			if指数是偶数 则：base^exponent = base^(exponent/2)*base^(exponent/2)
+    	 * 			if指数是奇数 则：base^exponent = base^(exponent/2)*base^(exponent/2)*base
+    	 * 时间复杂度：O(lgn)
+    	 * 运行时间：59ms	占用内存：10604k
+    	 */
+		double result = 1.0;
+    	if(base == 0)	// 0的任意次方都为0
+    		return 0;
+    	if(base == 1 || exponent == 0) // 1的任意整数次方都等于1。除开0外任何数的0次方都等于1
+    		return 1;
+    	if(exponent == 0) 
+    		return 1;
+    	// 判断exponent的正负
+    	if(exponent >= 0) {
+    		if(exponent % 2 == 0) { // 偶数次方
+    			result = solution(base, exponent/2);// 向下取整
+    			result *= result;
+    		}else{	// 奇数次方
+    			result = solution(base, exponent/2);// 向下取整
+    			result = result * result * base;  		
+    		}
+    		
+    		return result;
+    	}else {
+    		exponent *= -1;
+    		if(exponent % 2 == 0) { // 偶数次方
+    			result = solution(base, exponent/2);// 向下取整
+    			result *= result;
+    		} else{	// 奇数次方
+    			result = solution(base, exponent/2);// 向下取整
+    			result = result * result * base;  		
+    		}
+    		return 1.0/result;
+    	}
+		
+	}
+	public static void main(String[] args) {
+	
+		System.out.println(solution(-3, -1));
+
+	}
+
+}
+
+算法2：LeetCode
+题目：Given n points on a 2D plane, find the maximum number of points that lie on the same straight line. 
+		已知一个二维空间，找出在同一直线上所有的点的个数的最大值
+{代码}
+package org.leetcode;
+
+import java.util.HashMap;
+class Point {
+    int x;
+    int y;
+    Point() {
+        x = 0;
+        y = 0;
+    }
+    Point(int a, int b) {
+        x = a;
+        y = b;
+    }
+}
+
+/**
+ * 1. 列出所有点集（两个点的集合，不重复），用两个for循环
+ * 2. 用HashMap<String, Integer> String是斜率 k（字符型，首先斜率是不能用double表示的，不准确，还要注意分母不能为零）
+ *      2.1 求出k, 可以用公约数gcd函数可以求，但是它只能求两个正整数的最大公约数，所以要进行更改
+ *          public int gcd(int a, int b) {
+ *              if (b == 0)
+ *                  return a;
+ *              else
+ *              return gcd(b, a % b);
+ *          }
+ *      2.2 求斜率的字符表示（这里要考虑符号的正负，用你另一个函数首先判断斜率的分子分母）
+ * 3. 注意从point[ ,i]开始的点作为直线的起点，如果后面的点与其重合，则单独记录下来。
+ *     如果不重合，则根据斜率，也就是查找Map中是否包含，键为该斜率的元素。包含则对其value加一，否则将其作为新的键，1作为value存储下来
+ * 4. 判断该键为该斜率的value值和maxInner谁大，maxInner用来存储一次内循环的直线上最多的点
+ * 5. maxPiontCount用来直线上最多的点
+ */
+public class Solution {
+    public int maxPoints(Point[] points) {
+        int length = points.length;
+        int maxPoints = 0;
+        if (length <= 1)
+            return length;
+        for(int i=0; i<length; ++i){ // 穷举出所有点集
+            HashMap<String, Integer> map = new HashMap<String, Integer>();
+            int maxInner = 0;
+            int commonPoint = 1; // 记录重合的点的个数
+            Point cur = points[i];//起点
+            for(int j=i+1; j<length; ++j){
+                Point iter = points[j];
+                if(cur.x == iter.x && cur.y==iter.y){    // 点重合
+                    commonPoint++;
+                }else{
+                    String key = getSlope(cur, iter); //直线斜率
+                    map.put(key, map.containsKey(key)?map.get(key)+1:1);
+                    maxInner = Math.max(maxInner, map.get(key)); // 因为map存的value变化了，所以重新记录最大的点数
+                }
+            }
+            maxInner = commonPoint + maxInner;
+            maxPoints = Math.max(maxInner, maxPoints);
+        }
+        return maxPoints;
+    }
+
+    /**
+     * 求斜率
+     * @param cur
+     * @param iter
+     * @return  String
+     */
+    public String getSlope(Point cur, Point iter) {
+        int numerator = iter.y - cur.y;
+        int denominator = iter.x - cur.x;
+        String sign = getSign(numerator, denominator);
+        int gcd = gcd(Math.abs(numerator), Math.abs(denominator));//0和任意一个非零数'a'的gcd为'a',0和0的gcd为0,所以斜率为无穷的情况分母为0
+        return sign + Math.abs(numerator)/gcd + "/" + Math.abs(denominator)/gcd;
+    }
+
+    /**
+     * 求斜率的正负
+     * @param a
+     * @param b
+     * @return
+     */
+    public String getSign(int a, int b) {
+        if (a <= 0 && b <= 0 || a >= 0 && b >= 0)
+            return "+";
+        else
+            return "-";
+    }
+    public int gcd(int a, int b) {
+        if (b == 0)
+            return a;
+        else
+            return gcd(b, a % b);
+    }
+
+}
+
+【学习内容真实可靠，给自己的评分和完成度客观真实，不谦虚，不夸大】
