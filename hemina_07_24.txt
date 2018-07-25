@@ -1,0 +1,156 @@
+主  题：日报
+汇报人：何米娜
+日  期：2018年7月24日 星期二
+内  容：
+1.今日学习了的内容：
+1）object的源码学习（每个方法的原理和使用）
+2)MyBatis的原理知识
+3）两道算法题
+4）30道选择题
+5）异常的知识点
+
+2.没有解决的问题：
+1）MyBatis的代码在IDEA中实现
+2）还差20道选择题
+
+3.明天的学习计划：
+1）object的源码学习（每个方法的原理和使用）
+2)MyBatis的原理知识和部分代码的实现
+
+4.学习任务完成度： （80）  %[注：0% ~ 100%]
+5.对自己今天学习的满意度：（8）分 [注：1-10分]
+6.对今天的学习做一句话的总结：
+	继续努力
+算法1：
+题目：输入某二叉树的前序遍历和中序遍历的结果，请重建出该二叉树。假设输入的前序遍历和中序遍历的结果
+中都不含重复的数字。例如输入前序遍历序列{1,2,4,7,3,5,6,8}和中序遍历序列{4,7,2,1,5,3,8,6}，则重建二叉树并返回。
+代码如下：
+package com.tre.enode;
+
+public class TreeNode {
+	int val;
+	TreeNode left;
+	TreeNode right;
+	TreeNode(int x){
+		val = x; 
+	}
+	TreeNode(){
+		val=0;
+	}
+}
+package com.tre.enode;
+
+import java.util.HashMap;
+
+/*
+ * 输入某二叉树的前序遍历和中序遍历的结果，请重建出该二叉树。假设输入的前序遍历和中序遍历的结果中都不含重复的数字。
+ * 例如输入前序遍历序列{1,2,4,7,3,5,6,8}和中序遍历序列{4,7,2,1,5,3,8,6}，则重建二叉树并返回。
+ */
+public class Solution {
+	public static TreeNode reConstructBinaryTree(int [] pre,int [] in){
+		if(pre==null||in==null){
+			return null;
+		}
+		   
+		//将中序遍历用HashMap存储,key:中序遍历的值;vaule:下标
+		HashMap<Integer,Integer> map=new HashMap<>();
+		for(int i=0;i<in.length;i++){
+			map.put(in[i], i);
+		}
+		return preIn(pre,0,pre.length-1,in,0,in.length-1,map);
+	}
+	public static TreeNode preIn(int[] p, int pi, int pj, int[] n, int ni, int nj, HashMap<Integer, Integer> map) {
+		if(pi>pj){
+			return null;
+		}
+		TreeNode head=new TreeNode(p[pi]);
+		int index=map.get(p[pi]);
+		//确定左子树范围，递归调用求每个节点的左结点
+		head.left=preIn(p,pi+1,pi+index-ni,n,ni,index-1,map);
+		//确定右子树范围，递归调用求每个节点的右结点
+		head.right=preIn(p,pi+index-ni+1,pj,n,index+1,nj,map);
+		return head;
+	}
+	
+      public static void printendTreeNode(TreeNode head) {
+  		if(head!=null){
+  			printendTreeNode(head.left);
+  	  		printendTreeNode(head.right);
+  	  		System.out.print(head.val);
+  		}
+  	}
+	public static void main(String[] args) {
+		int[] pre={1,2,4,7,3,5,6,8};
+		int[] in={4,7,2,1,5,3,8,6};
+	    //以前序和中序遍历去重建二叉树
+		TreeNode head=new TreeNode();
+		head=reConstructBinaryTree(pre,in);
+		//以后序遍历的方式输出二叉树
+		printendTreeNode(head);
+	}
+	
+}
+算法2：
+题目：用两个栈来实现一个队列，完成队列的Push和Pop操作。 队列中的元素为int类型。
+代码如下：
+package com.xxy.stack;
+
+import java.util.Stack;
+/**
+ * 用两个栈来实现一个队列，完成队列的Push和Pop操作。 队列中的元素为int类型。
+ * @author Lenovo
+ *
+ */
+public class StacksToQueue {
+	private Stack<Integer> stackPush;
+	private Stack<Integer> stackPop;
+	public StacksToQueue() {
+		this.stackPush = new Stack<Integer>();
+		this.stackPop = new Stack<Integer>();
+	}
+	
+	public void add(int newNum){
+		this.stackPush.push(newNum);
+	}
+	
+	public int poll(){
+		if(stackPop.isEmpty()&&stackPush.isEmpty()){
+			throw new RuntimeException("队列为空");
+		}else if(stackPop.isEmpty()){
+			while(!stackPush.isEmpty()){
+				stackPop.push(stackPush.pop());
+			}
+		}
+		return stackPop.pop();
+	}
+	
+	public int peek(){
+		if(stackPop.isEmpty()&&stackPush.isEmpty()){
+			throw new RuntimeException("队列为空");
+		}else if(stackPop.isEmpty()){
+			while(!stackPush.isEmpty()){
+				stackPop.push(stackPush.pop());
+			}
+		}
+		return stackPop.peek();	
+	}
+	public void printStack(){
+		
+		System.out.println(stackPush);
+		System.out.println(stackPop);
+	}
+	public static void main(String[] args) {
+		StacksToQueue s = new StacksToQueue();
+		s.add(1);
+		s.add(2);
+		s.add(3);
+		s.add(4);
+		s.add(5);
+		s.printStack();
+		System.out.println(s.poll());
+		System.out.println(s.poll());
+		System.out.println(s.poll());
+		System.out.println(s.poll());
+		System.out.println(s.poll());
+	}
+}

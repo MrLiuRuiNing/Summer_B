@@ -1,0 +1,106 @@
+在Java增加泛型类型之前，通用程序的设计就是利用继承实现的，例如，ArrayList类只维护一个Object引用的数组，Object为所有类基类。
+这样的实现面临两个问题：
+1、当我们获取一个值的时候，必须进行强制类型转换。
+2、假定我们预想的是利用stringValues来存放String集合，因为ArrayList只是维护一个Object引用的数组，我们无法阻止将Integer类型（Object子类）的数据加入stringValues。然而，当我们使用数据的时候，需要将获取的Object对象转换为我们期望的类型（String），如果向集合中添加了非预期的类型（如Integer），编译时我们不会收到任何的错误提示。但当我们运行程序时却会报异常：
+Exception in thread "main" java.lang.ClassCastException: java.lang.Integer cannot be cast to java.lang.String at generic.BeforeGeneric.main(BeforeGeneric.java:24)
+
+
+泛型：
+    jdk1.5出现的安全机制
+    用于编译时期，确保了类型的安全
+
+好处：
+1.将运行时期的问题ClassCastException转到了编译时期
+2.避免了强制转换的麻烦
+
+<>: 什么时候用？ 当操作系统的应用数据类型不确定时，就使用<>;将要操作的引用数据类型传入即可，其实<>就是一个用于接收具体引用数据类型的参数范围
+
+在程序中，只要用到了带<>的类或者接口，就要明确传入的具体引用数据类型
+
+泛型的正确运转过程：
+java编译器是通过先检查代码中泛型的类型，然后再进行类型擦除，再进行编译的。
+擦除方法的返回类型后将返回Object类型，编译器自动插入Integer的强制类型转换。也就是说，编译器把这个方法调用翻译为两条字节码指令：
+1、对原始方法的调用
+2、将返回的Object类型强制转换为原始方法的返回值类型
+此外，存取一个泛型域时，也要插入强制类型转换。因此，我们说Java的泛型是在编译器层次进行实现的，被称为“伪泛型”，相对于C++。
+
+泛型的擦除：
+    运行时，会将泛型去掉，生成的class文件中是不带泛型的，这个称之为泛型的擦除
+
+为什么擦除？因为为了兼容运行的类加载器
+
+eg:
+ArrayList<String> arrayString=new ArrayList<String>();
+ArrayList<Integer> arrayInteger=new ArrayList<Integer>();
+System.out.println(arrayString.getClass()==arrayInteger.getClass());
+//true
+
+
+在这个例子中，我们定义了两个ArrayList数组，不过一个是ArrayList<String>泛型类型，只能存储字符串。一个是ArrayList<Integer>泛型类型，只能存储整型。最后，我们通过arrayString对象和arrayInteger对象的getClass方法获取它们的类信息并比较，发现结果为true。
+        因为，在编译期间，所有的泛型信息都会被擦除，List<Integer>和List<String>类型，在编译后都会变成List类型（原始类型）。Java中的泛型基本上都是在编译器这个层次来实现的，这也是Java的泛型被称为“伪泛型”的原因。
+原始类型原始类型就是泛型类型擦除了泛型信息后，在字节码中真正的类型.
+原始类型的名字就是删去类型参数后的泛型类型的类名。擦除类型变量，并替换为限定类型（T为无限定的类型变量，用Object替换）。
+eg.若有Pair<T>，T是一个无限定的类型变量，所以用Object替换。如果是Pair<T extends Number>，擦除后，类型变量用Number类型替换。
+
+泛型补偿：
+    在运行时，通过获取元素的类型进行转换动作，去验证类型正确，不用使用者在进行类型转换了。
+
+下回再见：
+泛型在方法上：
+1）在调用方法时，可以指定泛型类型，也可以不指定
+2）在不指定泛型类型的情况下，泛型类型为该方法中的几种参数类型的共同父类的最小级，直到Object.
+3 ) 在指定泛型的时候，该方法中的所有参数类型必须是该泛型类型或者其子类
+4）若该方法为静态方法且在一个泛型类中，需要自定义泛型，不能与类的泛型相同
+        eg.泛型类中的静态方法和静态变量不可以使用泛型类所声明的泛型类型参数的原因如下：泛型类中的泛型参数的实例化是在定义泛型类型对象（例如ArrayList<Integer>）的时候指定的，而静态变量和静态方法不需要使用对象来调用。对象都没有创建，确定这个泛型参数是何种类型，
+
+泛型的通配符：
+无界通配符：
+        ？未知类型  并不对其进行操作
+         相当于Object
+通配符上界：
+    eg.其中List<? extends Number> list    T为Number的子类
+public class Test {
+    public static void printIntValue(List<? extends Number> list) {
+        for (Number number : list) {
+            System.out.print(number.intValue()+" ");
+        }
+        System.out.println();
+    }
+    public static void main(String[] args) {
+        List<Integer> integerList=new ArrayList<Integer>();
+  integerList.add(2);
+        integerList.add(2);
+        printIntValue(integerList);
+        List<Float> floatList=new ArrayList<Float>();
+        floatList.add((float) 3.3);
+        floatList.add((float) 0.3);
+        printIntValue(floatList);
+    }
+}
+
+通配符下界：
+    
+eg.其中List<? super Number> list   T为Number的父类
+public class Test {
+    public static void fillNumberList(List<? super Number> list) {
+        list.add(new Integer(0));
+        list.add(new Float(1.0));
+    }
+    public static void main(String[] args) {
+        List<? super Number> list=new ArrayList();
+        list.add(new Integer(1));
+        list.add(new Float(1.1));
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
