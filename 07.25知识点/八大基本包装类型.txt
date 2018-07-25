@@ -1,0 +1,79 @@
+基本数据类型和包装类的对应表
+byte   0
+short     0
+int    0
+long    0
+float    0.0
+double    0.0
+char    
+空格
+boolean   
+ false
+Byte   Null
+Short    Null
+Integer    Null
+Long    Null
+Float    Null
+Double    Null
+Character     Null
+Boolean
+Null
+在JDK1.5之前，构建一个包装类需要通过构造器来构造包装类对象，但是这显得代码过于麻烦，所以从1.5之后就提供了自动装箱和自动拆箱的功能。
+
+进行自动装箱和自动拆箱时，必须注意类型匹配:
+
+自动装箱：将一个基本类型变量直接赋值给对应的包装类变量，或者赋值给Object变量（因为Object类是所有类的父类）:
+         int i= 123;
+        Integer  integer = i;  //JDK1.5之前：new Integer(i);
+
+        Object   obj = 123456;   //先把123456自动装箱为Integer类型，Object代表Integer
+        System.out.println(obj);//打印结果123456
+
+自动拆箱：与自动装箱相反，允许直接把包装类对象直接赋值给一个对应的基本类型变量。
+        Integer   integer = 1234;    //自动装箱
+        
+        intint2 = integer;   //自动拆箱
+        System.out.println(int2);
+ 
+        int i= 123;
+        Object   obj = i;
+        int ii= (Integer)obj;
+        System.out.println(ii);
+
+
+包装类还可以实现基本类型变量和字符串之间的转换，把字符串类型的值转换为基本类型的值有两种方式。
+1、parseXxx（String )静态方法。（Character除外）
+2、利用包装类提供的Xxx（Stirng s)构造器。
+class BaoZhuang{
+    public  static void main(String[] args){
+        //字符串和基本数据类型可以转换了
+        //1 静态方法调用
+        int  result = Integer.parseInt("123");
+        System.out.println(result);
+        //2 构造方法创建
+        result= new Integer("1234");
+        System.out.println(result);
+    }
+}
+
+缓存区：
+1：int
+        系统把一个-128~127之间的整数自动装箱成Integer实例，并放入了一个名为cache的数组中缓存起来。如果以后把一个-128~127之间的整数自动装箱成一个Integer实例时，实例实际直接指向对应的数组元素，因此-128~127之间的同一个整数自动装箱成Integer实例时，永远是引用cache数组的同一个数组元素，所以它们全部都相等；但每次把一个不再-128~127范围内的整数自动装箱成Integer实例时，系统总是创建一个Integer实例。
+2：double与float型
+        在-128~127内的整型数值的个数是有限的，而浮点数却不是。
+        注意：Integer、Short、Byte、Character、Long这几个类的valueOf方法的实现是类似的。Double、Float的valueOf方法的实现是类似的。
+3.：当"=="运算符的两个操作数都是包装器类型的引用，则是比较指向的是否是同一个对象，而如果其中有一个操作数是表达式（即包含算术运算）
+       则比较的是数值（即会触发自动拆箱的过程）。equals方法并不会进行类型转换而是指它输出的内容是否相同。
+
+
+
+
+
+
+
+
+
+
+
+
+

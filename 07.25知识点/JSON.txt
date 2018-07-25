@@ -1,0 +1,67 @@
+ JSON
+          (1  json是一种基于文本，，独立的语言，易于理解的轻量级的数据交换格式
+          (2  json全称为javaScript对象表示法
+          (3  js处理xml不方便，xml的标记比数据多，增加了交换产生的流量，而在json没有附加的             任何标记，在js中可以作为对象处理
+
+JSON的语法规则：
+            数据为 键/值 对；     数据由逗号分隔     大括号保存对象     方括号保存数组
+
+var text= {“employee”：[
+　　{“username1” : “zhangsan1”，”age1” : ”18” }，
+　　{“username2” : “zhangsan2”，”age2” : ”18” }，
+　　{“username3” : “zhangsan3”，”age3” : ”18” }]}
+
+1.一个对象可以有多个属性，一个属性对应一个值，对象用 { } ，
+    属性和值都必须用“”包裹，属性与值之间用:隔开，属性与属性之间用逗号隔，
+      比如：{“username1” : “zhangsan1”，”age1” : ”18” }
+2.多个对象之间用逗号隔开；
+3.值可以为数组，数组中包含很多对象，数组必须用 [ ] , 比如 “employee”：[ 很多对象 ]
+4.json最外层需要用{ }包裹
+
+在js中:  json字符串与json对象的区别：
+字符串：指使用“”双引号或’’单引号包括的字符。
+            例如：var comStr = 'this is string';
+json字符串：指的是符合json格式要求的js字符串。
+            例如：var jsonStr = "{StudentID:'100',Name:'tmac',Hometown:'usa'}";
+json对象：指符合json格式要求的js对象。
+            例如：var jsonObj = { StudentID: "100", Name: "tmac", Hometown: "usa" };
+
+
+json的读，写数据：
+    A：读取JSON对象中的数据
+                在JSON对象中数字最好不要为关键字
+function readjson(){
+    alert(text.employee[0].age1)
+}
+   B: 向json对象中添加数据
+function addjson(){
+   text.custemor="女"；
+    //text["custemor"]="女"；
+}
+    C：修改和删除json对象数据
+function updatejson(){
+   text.custemor="男"；
+}
+function deletejson(){
+   delete text.custemor;
+}
+    D: 遍历JSON对象
+可以使用for…in…循环来遍历JSON对象中的数据，比如我们要遍历输出text对象的值，
+function Traversal() {
+for (var c in text) {
+console.log(c + ":", text[c]);
+}
+}
+    E: 读取json的字符串对象
+var emp='{"id":011,"name":"张三","sex":"男","xp":["麻将","tv"]}'
+var empobj=eval("("+emp+")");
+alert(empobj.id+" "+empobj.name+"  "+empobj.sex);
+alert(empobj.xp[0]+" "+empobj.xp[1]);
+
+
+1、JsonElement：它是一个抽象类，表示某个json元素。这个元素可以是一个JsonObject、JsonArray、JsonPrimitive或JsonNull，这些都是JsonElement这个抽象类的子类。JsonElement运用了Java的多态机制提供一系列的方法来判断当前的Json对象是否属于上述子类的一种。
+2、JsonPrimitive：它是JsonElement的子类，该类对Java的基本类型及其对应的包装类进行了封装，并通过setValue方法为value赋值。它可以表示为任意一种Java的基本类型或其对应的包装类。
+3、JsonObject：json对象类，包含了键值对，键是字符串类型，它的值是一个JsonElement。
+4、JsonArray：Json的数组包含一个或多个Json串。JsonArray中用一个集合类List<JsonElement>来添加json数组中的每个元素。
+5、JsonNull：null值。
+6、JsonParser：Json解析类，将字符串类型或io流对象解析成JsonElement。
