@@ -1,0 +1,154 @@
+日报格式:
+主  题：日报
+汇报人：陈鑫
+日  期：2018年7月26日 星期四
+内  容：
+1.今日学习了的内容：
+1）Mybatis的深化学习
+2）两道算法题
+3）学习了归并和快速排序
+4）学习Spring和SpringMVC
+2.没有解决的问题：
+1）Linux视频没完成,String源码没看完
+3.明天的学习计划：
+1）学习Spring和SpringMVC
+2）两道算法题
+3）一小时git视频和练习
+4）看String源码
+4.学习任务完成度： （60%）%[注：0% ~ 100%]
+5.对自己今天学习的满意度：（6）分 [注：1-10分]
+6.对今天的学习做一句话的总结：成功在于坚持，依然坚信，如果你付出了，一定会有回报的。
+附录：
+算法1：剑指Offer
+题目：输入一个整数数组，实现一个函数来调整该数组中数字的顺序，使得所有的奇数位于数组的前半部分，所有的偶数位于数组的后半部分，
+	  并保证奇数和奇数，偶数和偶数之间的相对位置不变。
+{代码}
+/**
+ * 输入一个整数数组，实现一个函数来调整该数组中数字的顺序，使得所有的奇数位于数组的前半部分，
+ * 所有的偶数位于数组的后半部分，并保证奇数和奇数，偶数和偶数之间的相对位置不变。
+ * 思路：辅助内存：一个和原数组大小一样的数组tem[array.length]
+ *       如果是奇数，则放入tem数组（从前往后放）
+ *       如果是偶数，则从后往前放
+ *       最后放回原数组中
+ *       时间复杂度：O(n)
+ *
+ */
+public class Number_13 {
+    public static void main(String[] args) {
+       int array[] = {1,3,2,5,4,8,12};
+        reOrderArray(array);
+        for (int e:array
+             ) {
+            System.out.print(e);
+        }
+
+    }
+    public static void reOrderArray(int [] array) {
+        int n=array.length;
+        int []tem = new int[n];
+        int l,r;
+        l = 0;
+        r = n-1;
+        for(int i=0; i<n; ++i){ // 遍历原数组
+            if(array[i] %2 == 1){ // 奇数
+                tem[l] = array[i];
+                l++;
+            }else {
+                tem[r] = array[i];
+                r--;
+            }
+        }
+        for(int i=0; i<l; ++i){
+            array[i] = tem[i];
+        }
+        for(int i=n-1; i>r; --i){
+            array[l] = tem[i];
+            l++;
+        }
+    }
+}
+
+算法2：LeetCode
+题目：Sort a linked list in O(n log n) time using constant space complexity. 
+	 题意：对一个链表进行排序，要求时间复杂度不超过O(n log n)
+{代码}
+
+  class ListNode {
+  int val;
+  ListNode next;
+  ListNode(int x) {
+      val = x;
+      next = null;
+  }
+}
+
+/** Sort a linked list in O(n log n) time using constant space complexity.
+ * 题意：对一个链表进行排序，要求时间复杂度不超过O(n log n)
+ *
+ * 使用归并思想，首先要就是找到链表中点，然后递归，合并两个有序的链表
+ */
+public class x04_sort_list {
+    public static void main(String[] args) {
+
+        ListNode head = new ListNode(7);
+        ListNode h = head;
+        int arr[] ={2,4,1,8,5,3,10,6};
+        for(int i=0; i<8; ++i){
+            h.next = new ListNode(arr[i]);
+            h = h.next;
+        }
+
+        ListNode p = sortList(head);
+        while (p != null){
+            System.out.print(p.val);
+            p = p.next;
+        }
+    }
+    public static ListNode sortList(ListNode head) {    // 注意这里是不带头结点（坑）
+        if(head == null || head.next == null){
+            return head;
+        }
+        ListNode tem = getMid(head);
+        ListNode mid;
+        mid = tem.next; // 得到的是右子链表的开始节点
+        tem.next = null;
+
+        return merge(sortList(head),sortList(mid)); // 注意，head.next，mid是不带头结点的链表
+
+    }
+    public static ListNode getMid(ListNode head){
+        if(head == null || head.next == null){
+            return head;
+        }
+        // 统计节点数
+        ListNode slow,quick;
+        slow = quick = head;
+        while(quick.next != null && quick.next.next != null){ // 至少有两个节点才分解，这里是我开始使用的方法的误区
+            slow = slow.next;
+            quick = quick.next.next;
+        }
+        return slow;
+    }
+    public static ListNode merge(ListNode left,ListNode right){
+        ListNode p, q;
+        p = new ListNode(0);
+        q = p;
+        while (left != null && right != null){
+            if(left.val<right.val){
+                p.next = left;
+                left= left.next;
+            }else {
+                p.next =right;
+                right = right.next;
+            }
+            p = p.next;
+        }
+        if(left != null) p.next= left;
+        if(right!= null) p.next= right;
+
+        return q.next;
+    }
+
+}
+
+【学习内容真实可靠，给自己的评分和完成度客观真实，不谦虚，不夸大】
