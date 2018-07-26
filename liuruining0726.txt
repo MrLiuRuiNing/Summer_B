@@ -1,0 +1,89 @@
+主  题：日报
+汇报人：刘睿宁
+日  期：2018年7月26日 星期四
+内  容：
+1.	今日学习了的内容：
+1）	Linux压缩解压帮助命令
+2）	osi七层结构
+3）	阅读string源码
+2.	没有解决的问题：
+1）对String源码理解还不透彻，对深入到JVM的东西说不出来
+
+3.	明天的学习计划：
+1）学习mybatis
+2）学习GDB调试
+4.学习任务完成度： （80）%[注：0% ~ 100%]
+5.对自己今天学习的满意度：（8）分 [注：1-10分]
+6.对今天的学习做一句话的总结：基础还需加强
+算法1：
+题目：
+/*
+ * 在一个二维数组中（每个一维数组的长度相同），每一行都按照从左到右递增的顺序排序，每一列都按照从上到下递增的顺序排序。
+ * 请完成一个函数，输入这样的一个二维数组和一个整数，判断数组中是否含有该整数
+ * */
+public class two_array {	
+	//100%
+	public boolean Find2(int target, int [][] array) {
+		 int rows = array.length; 
+		 int cols = array[0].length; 
+      int row = 0;
+      int col = cols-1;
+      if ((array != null) && (rows > 0 && cols > 0) && (target<=array[rows-1][cols-1]) && (target>=array[0][0]))
+      {
+      while(row<rows&&col>-1) {
+   	   if(array[row][col]==target) {
+   		   return true;
+   	   }else if(array[row][col]>target&&(col-1)>-1) {
+   		   --col;
+   	   }else  {
+   		   ++row; 
+   	   }
+   	   
+      	}
+      }
+      return false;
+	}
+	public static void main(String[] args) {
+		int [][]a= {{1,2,8,9},{2,4,8,12},{4,7,10,13},{6,8,11,15}};
+		two_array t=new two_array();
+		System.out.println(t.Find2(1,a));
+
+	}
+
+}
+
+算法2：
+/*
+ * 请实现一个函数，将一个字符串中的每个空格替换成“%20”。
+ * 例如，当字符串为We Are Happy.则经过替换之后的字符串为We%20Are%20Happy。
+ * */
+public class exchange_space {
+	public String replaceSpace(StringBuffer str) {
+    	String s=str.toString();
+    	char[] c=s.toCharArray();
+    	int space=0,i=0;
+    	for( ;i<s.length();++i) {
+    		if(c[i]==' ') ++space;
+    	}//统计空格个数
+    	int j=s.length()+2*space;
+    	char nc[]=new char[j];
+    	for(i=s.length()-1,j--;i>-1&&j>-1;i--) {
+    		if(c[i]!=' ') {
+    			nc[j--]=c[i];
+    		}else {
+    			nc[j--]='0';
+    			nc[j--]='2';
+    			nc[j--]='%';
+    		}
+    	}
+    	s=String.valueOf(nc);
+    	return s;
+    }
+	public static void main(String[] args) {
+		StringBuffer str=new StringBuffer("We Are Happy");
+		exchange_space e=new exchange_space();
+		System.out.println(e.replaceSpace(str));
+
+	}
+
+}
