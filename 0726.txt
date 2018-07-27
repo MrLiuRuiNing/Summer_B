@@ -1,0 +1,59 @@
+日报格式:
+主  题：日报
+汇报人：陈文通
+日  期：2018年1月2日 星期二
+内  容：
+1.今日学习了的内容：
+1）spring框架搭建
+2）Strin源码分析
+3）Linux视频学习
+4）算法练习
+2.没有解决的问题：
+3.明天的学习计划：
+1）spring+mybatis
+2）Linux视频学习
+3）算法练习
+4.学习任务完成度： （80）%[注：0% ~ 100%]
+5.对自己今天学习的满意度：（70）分 [注：1-10分]
+6.对今天的学习做一句话的总结：
+附录：
+算法1：
+题目：输入某二叉树的前序遍历和中序遍历的结果，请重建出该二叉树。假设输入的前序遍历和中序遍历的结果中都不含重复的数字。例如输入前序遍历序列{1,2,4,7,3,5,6,8}和中序遍历序列{4,7,2,1,5,3,8,6}，则重建二叉树并返回。
+     /**
+ * Definition for binary tree
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public TreeNode reConstructBinaryTree(int [] pre,int [] in) {
+               if(pre==null||in==null){
+            return null;
+        }
+  
+        java.util.HashMap<Integer,Integer> map= new java.util.HashMap<Integer, Integer>();
+        for(int i=0;i<in.length;i++){
+            map.put(in[i],i);
+        }
+        return preIn(pre,0,pre.length-1,in,0,in.length-1,map);
+    }
+      
+      public TreeNode preIn(int[] p,int pi,int pj,int[] n,int ni,int nj,java.util.HashMap<Integer,Integer> map){
+  
+        if(pi>pj){
+            return null;
+        }
+        TreeNode head=new TreeNode(p[pi]);
+        int index=map.get(p[pi]);
+        head.left=preIn(p,pi+1,pi+index-ni,n,ni,index-1,map);
+        head.right=preIn(p,pi+index-ni+1,pj,n,index+1,nj,map);
+        return head;
+    }
+}
+算法2：
+题目：
+{代码}
+【学习内容真实可靠，给自己的评分和完成度客观真实，不谦虚，不夸大】
