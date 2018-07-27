@@ -1,0 +1,96 @@
+主  题：日报
+汇报人：何米娜
+日  期：2018年7月26日 星期四
+内  容：
+1.今日学习了的内容：
+
+1)小demo的service
+2)快速排序的第三种方法
+
+
+2.没有解决的问题：
+
+
+
+
+3.明天的学习计划：
+1)小demo的service
+2)快速排序的第三种方法
+
+
+4.学习任务完成度： （80）  %[注：0% ~ 100%]
+5.对自己今天学习的满意度：（8）分 [注：1-10分]
+6.对今天的学习做一句话的总结：
+	继续努力
+算法1：
+题目：
+
+package com.xxy.weiyunsuai;
+
+import java.util.Scanner;
+
+public class NNcount {
+	public static void main(String[] args) {
+		Scanner scan=new Scanner(System.in);
+		int n0=scan.nextInt();
+		double n1=scan.nextDouble();
+		double n=nnCount(n0,n1);
+		System.out.println(n);
+	}
+/*
+ * 给定一个double类型的浮点数base和int类型的整数exponent。求base的exponent次方。
+ */
+	public static double nnCount(int n0, double n1) {
+		double n=n1;
+		if(n0<0){
+			n0=-n0;
+		}
+		if(n0==0){
+			return 1;
+		}
+		for(int i=1;i<n0;i++){
+			n*=n1;
+		}
+		return n0<0?1/n:n;
+	}
+}
+算法二：
+package com.erwei.array;
+
+import java.util.Scanner;
+
+public class Oddarray {
+	public static void main(String[] args) {
+		Scanner scan=new Scanner(System.in);
+		int n=scan.nextInt();
+		int[] array=new int[n];
+		for (int i = 0; i < n; i++) {
+			array[i]=scan.nextInt();		
+		}
+		scan.close();
+		for (int i : array) {
+			System.out.println(i+" ");
+		}
+		coverodd(array);
+	}
+
+	public static void coverodd(int[] array) {
+		//调整array.length-1次
+		for(int i= 0;i<array.length-1;i++){
+            for(int j=0;j<array.length-1-i;j++){
+            	//若奇数与偶数相邻，则将偶数放在数组后边
+                if(array[j]%2==0&&array[j+1]%2==1){
+                    int t = array[j];
+                    array[j]=array[j+1];
+                    array[j+1]=t;
+                }
+            }
+        }
+		
+	}
+	
+}
+
+
+
+
