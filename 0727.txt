@@ -1,0 +1,65 @@
+日报格式:
+主  题：日报
+汇报人：陈文通
+日  期：2018年7月27日 星期五
+内  容：
+1.今日学习了的内容：
+1）SpingMVC搭建
+2）两道算法题（剑指offer）
+3）linux基础学习
+2.没有解决的问题：
+1）SpringMVC注解配置原理还真的很懵逼
+2）
+3.明天的学习计划：
+1）Spring+mybatis
+2）两道算法题
+3）Linux视频学习
+4.学习任务完成度： （90）%[注：0% ~ 100%]
+5.对自己今天学习的满意度：（70）分 [注：1-10分]
+6.对今天的学习做一句话的总结：
+附录：
+算法1：
+题目：用两个栈来实现一个队列，完成队列的Push和Pop操作。 队列中的元素为int类型。
+import java.util.Stack;
+
+public class Solution {
+    Stack<Integer> stack1 = new Stack<Integer>();
+	Stack<Integer> stack2 = new Stack<Integer>();
+	int i = 0;
+
+	public void push(int node) {
+		++i;
+		stack1.push(node);
+	}
+
+	public int pop() {
+		--i;
+		if (stack2.isEmpty()) {
+			while (!stack1.isEmpty()) {
+				stack2.push(stack1.pop());
+			}
+		}
+		return stack2.pop();
+
+	}
+
+}
+算法2：
+题目：把一个数组最开始的若干个元素搬到数组的末尾，我们称之为数组的旋转。 输入一个非减排序的数组的一个旋转，输出旋转数组的最小元素。 例如数组{3,4,5,1,2}为{1,2,3,4,5}的一个旋转，该数组的最小值为1。 NOTE：给出的所有元素都大于0，若数组大小为0，请返回0。
+import java.util.ArrayList;
+public class Solution {
+    public int minNumberInRotateArray(int [] array) {
+        int min=array[0];
+        if(array.length==0)
+            return 0;
+        else{
+            for(int i=1;i<array.length;i++){
+                if(array[i]<min){
+                     min=array[i];
+                }
+            }
+            return min;
+        }
+    }
+}
+【学习内容真实可靠，给自己的评分和完成度客观真实，不谦虚，不夸大】
