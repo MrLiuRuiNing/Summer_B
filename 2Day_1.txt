@@ -1,0 +1,40 @@
+主  题：日报
+汇报人：左超
+日  期：2018年7月25日 星期3
+内  容：
+	今日学习了的内容：
+		
+		SpringBoot学习：
+		
+		maven搭建。
+		
+		线程开始复习，多线程编程核心技术。
+		
+		排序算法之插入排序：
+		int Insertsant(int a[],int n)
+		{
+			int i,j,x;
+			for(i=1;i<n;i++)
+			{
+				x=a[i];
+				for(j=i-1;j>-1&&a[j]>x;j--)
+				a[j+1]=a[j];
+				a[j+1]=x;
+			}
+			return  0;
+		}
+
+		复习  ArrayList LinkedList Vector
+		
+		1、ArrayList LinkedList Vector 的底层实现和区别
+		List：有序，可重复，有索引。
+		Vector： 底层数据结构是数组结构，线程安全。无论增删还是查询都非常慢。默认扩充为原来的2倍。
+		ArrayList：底层数据结构是数组结构，线程不安全。所以ArrayList的出现代替了Vector，但是查询速度很快。默认扩充为原来的1.5倍。
+		LinkedList：底层是双向链表数据结构。线程安全的，同时对元素的增删操作效率很高，但查询慢。
+		Vector 和  ArrayList都是基于存储元素的Object[ ] array来实现的。
+
+		1、 线程同步，Vector线程安全，ArrayList线程不安全。
+		2、 效率问题，Vector效率低，ArrayList效率高。
+		3、 增长数量，Vector以1.5倍增长，ArrayList以2倍增长。
+
+【学习内容真实可靠，给自己的评分和完成度客观真实，不谦虚，不夸大】
