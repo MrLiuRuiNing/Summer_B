@@ -1,0 +1,52 @@
+日报格式:
+主  题：日报
+汇报人：陈文通
+日  期：2018年07月31日 星期二
+内  容：
+1.今日学习了的内容：
+1）一道算法练习
+2）建立数据库结构说明文档
+3）SpringBoot初步学习
+4）Linux视频学习
+2.没有解决的问题：
+
+3.明天的学习计划：
+1）继续学习SpringBoot和Linux
+2）明天必须解决Spring Boot搭建
+4.学习任务完成度： （80）%[注：0% ~ 100%]
+5.对自己今天学习的满意度：（70）分 [注：1-10分]
+6.对今天的学习做一句话的总结：
+附录：
+算法1：
+题目：大家都知道斐波那契数列，现在要求输入一个整数n，请你输出斐波那契数列的第n项（从0开始，第0项为0）。
+n<=39
+
+public class Solution {
+    int i = 2;
+	public int Fibonacci(int n) {
+		int f1 = 0;
+		int f2 = 1;
+		int k = 0;
+		if (n == 0)
+			return f1;
+		if (n == 1)
+			return f2;
+		k = Fib(f1, f2, n);
+		return k;
+	}
+	public int Fib(int f1, int f2, int n) {
+		while (i-1!= n) {
+			i++;
+			int temp;
+			temp = f1;
+			f1 = f2;
+			f2 = temp + f2;
+			f2=Fib(f1, f2, n);
+		}
+		return f2;
+	}
+}
+算法2：
+题目：
+{代码}
+【学习内容真实可靠，给自己的评分和完成度客观真实，不谦虚，不夸大】
