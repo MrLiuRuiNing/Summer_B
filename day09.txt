@@ -1,0 +1,66 @@
+日报格式:
+主  题：日报
+汇报人：陈鑫
+日  期：2018年7月31日 星期二
+内  容：
+1.今日学习了的内容：
+1）一道算法题
+2）Spring的架构，及ssm整合
+2.没有解决的问题：
+1）算法只做了一道
+2）项目知识准备没开始
+3.明天的学习计划：
+1）加强三大框架的理解,熟练配置
+2）两道算法题
+3）为项目做知识准备
+4.学习任务完成度： （60%）%[注：0% ~ 100%]
+5.对自己今天学习的满意度：（6）分 [注：1-10分]
+6.对今天的学习做一句话的总结：成功在于坚持，依然坚信，如果你付出了，一定会有回报的。
+附录：
+算法1：剑指Offer
+题目： 定义栈的数据结构，请在该类型中实现一个能够得到栈中所含最小元素的min函数（时间复杂度应为O（1））。
+{代码}
+public class Number_20 {
+
+    private Stack<Integer> stack1 = new Stack<Integer>();
+    private Stack<Integer> stack2 = new Stack<Integer>();  // 栈顶的数一定是最小的
+
+    public void push(int node) {
+        stack1.push(node);
+        if(stack2.isEmpty()){   // 第一个元素
+            stack2.push(node);
+        }else {
+            if(stack2.peek() > node){       // 注意这里会把相同的数也存进栈
+                stack2.push(node);
+            }
+        }
+
+    }
+
+    public void pop() {
+        if (!stack2.isEmpty() ) {
+            if (stack2.peek() ==  stack1.peek() ){  // pop所有比要出栈的元素小的数
+                stack2.pop();
+            }
+        }
+        top();
+    }
+
+    public int top() {
+        if (! stack1.isEmpty()){
+            return stack1.pop();
+        }
+        return Integer.parseInt(null);
+    }
+
+    public int min() {
+        if (!stack2.isEmpty()){
+            return stack2.peek();
+        }
+        return Integer.parseInt(null);
+    }
+}
+
+
+
+【学习内容真实可靠，给自己的评分和完成度客观真实，不谦虚，不夸大】
