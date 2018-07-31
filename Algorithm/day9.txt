@@ -1,0 +1,109 @@
+﻿日报格式:
+主  题：日报
+汇报人：汤磊
+日  期：2018年8月1日 星期二
+内  容：
+1.	今日学习了的内容：
+1）springboot的搭建
+2）HashTable源码
+3）两道算法
+2.没有解决的问题：
+1）Linux的五个视频
+3.	明天的学习计划：
+1）Springboot与es整合
+2）如果有时间Springboot与shiro整合
+3）算法两道
+4.学习任务完成度： （60）%[注：0% ~ 100%]
+5.对自己今天学习的满意度：（5）分 [注：1-10分]
+因为今天讨论了几个小时的数据库的设计和需求以至于没有时间看源码
+附录：
+算法一
+给定一个包含 n 个整数的数组 nums，判断 nums 中是否存在三个元素 a，b，c ，使得 a + b + c = 0 ？找出所有满足条件且不重复的三元组。
+
+注意：答案中不可以包含重复的三元组。
+
+例如, 给定数组 nums = [-1, 0, 1, 2, -1, -4]，
+
+满足要求的三元组集合为：
+[
+  [-1, 0, 1],
+  [-1, -1, 2]
+]
+class Solution {
+    public List<List<Integer>> threeSum(int[] nums) {
+        Arrays.sort(nums);
+        List<List<Integer>> res=new ArrayList<List<Integer>>();
+        List<Integer> help=null;
+        for(int i=0;i<nums.length;++i){
+            int k=0-nums[i];
+            if(i==0||(i>0&&nums[i-1]!=nums[i])){
+                 for(int left=i+1,right=nums.length-1;left<right;){
+                     if(left>i+1&&nums[left-1]==nums[left]){
+                         left++;
+                         continue;
+                     }
+                     if(right<nums.length-1&&nums[right+1]==nums[right]){
+                         right--;
+                         continue;
+                     }
+                     if(nums[left]+nums[right]>k){
+                         right--;
+                     }
+                     else if(nums[left]+nums[right]<k){
+                         left++;
+                     }
+                     else{
+                         help=new ArrayList<Integer>();
+                         help.add(nums[i]);
+                         help.add(nums[left]);
+                         help.add(nums[right]);
+                         res.add(help);
+                         right--;
+                         left++;
+                     }
+                 }
+            }
+        }
+        return res;
+    }
+}
+算法二
+给定一个包括 n 个整数的数组 nums 和 一个目标值 target。找出 nums 中的三个整数，使得它们的和与 target 最接近。返回这三个数的和。假定每组输入只存在唯一答案。
+
+例如，给定数组 nums = [-1，2，1，-4], 和 target = 1.
+
+与 target 最接近的三个数的和为 2. (-1 + 2 + 1 = 2).
+class Solution {
+    public int threeSumClosest(int[] nums, int target) {
+        int res=nums[0]+nums[1]+nums[2];
+        Arrays.sort(nums);
+        for(int i=0;i<nums.length;++i){
+            int k=target-nums[i];
+            if(i==0||(i>0&&nums[i-1]!=nums[i])){
+                 for(int left=i+1,right=nums.length-1;left<right;){
+                     if(left>i+1&&nums[left-1]==nums[left]){
+                         left++;
+                         continue;
+                     }
+                     if(right<nums.length-1&&nums[right+1]==nums[right]){
+                         right--;
+                         continue;
+                     }
+                     if(nums[left]+nums[right]>k){
+                          res=Math.abs(res-target)>Math.abs(nums[left]+nums[right]+nums[i]-target)?nums[left]+nums[right]+nums[i]:res;
+                         right--;
+                     }
+                     else if(nums[left]+nums[right]<k){
+                         res=Math.abs(res-target)>Math.abs(nums[left]+nums[right]+nums[i]-target)?nums[left]+nums[right]+nums[i]:res;
+                         left++;
+                     }
+                     else{
+                        return target;
+                     }
+                 }
+            }
+        }
+        return res;
+    }
+}
+【学习内容真实可靠，给自己的评分和完成度客观真实，不谦虚，不夸大】
