@@ -1,0 +1,81 @@
+主  题：日报
+汇报人：何米娜
+日  期：2018年7月30日 星期一
+内  容：
+1.今日学习了的内容：
+（1 JVM的第二，三章
+（2 复习Servlet的原理
+（3 两道算法
+（4 30道选择题
+（5 shiro的2个视频
+
+2.没有解决的问题：
+（1 复习Servlet的原理
+
+
+
+3.明天的学习计划：
+（1 shiro的3个视频
+
+
+4.学习任务完成度： （80）  %[注：0% ~ 100%]
+5.对自己今天学习的满意度：（8）分 [注：1-10分]
+6.对今天的学习做一句话的总结：
+	继续努力
+算法1：
+题目：操作给定的二叉树，将其变换为源二叉树的镜像。
+public class Solution {
+    public void Mirror(TreeNode root) {
+        if(root==null||(root.left==null&&root.right==null)){
+            return;
+        }
+        TreeNode node=root.left;
+        root.left=root.right;
+        root.right=node;
+        if(root.left!=null){
+            Mirror(root.left);
+        }
+        if(root.right!=null){
+            Mirror(root.right);
+        }
+    }
+}
+算法二：
+题目：输入一个矩阵，按照从外向里以顺时针的顺序依次打印出每一个数字，例如，如果输入如下4 X 4矩阵： 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16
+则依次打印出数字1,2,3,4,8,12,16,15,14,13,9,5,6,7,11,10.
+import java.util.ArrayList;
+public class Solution {
+    public ArrayList<Integer> printMatrix(int [][] matrix) {
+        int row = matrix.length;
+        int col = matrix[0].length;
+        if (row == 0 || col == 0)  return null;
+        ArrayList<Integer> list = new ArrayList<Integer>();
+        int left = 0,top = 0,bottom = row - 1,right = col - 1;
+        //终止条件
+        while(left <= right && top <= bottom){
+            //从左向右
+            for(int i = left;i<=right;i++){
+                list.add(matrix[top][i]);
+            }
+            //从上到下
+            for(int j = top+1;j<=bottom;j++){
+                list.add(matrix[j][right]);
+            }
+             //从右向左
+            if (top != bottom){
+                for(int t = right-1;t>=left;t--){
+                   list.add(matrix[bottom][t]);
+               }
+            }
+           
+            //从下向上
+            if(left != right){
+                for(int k = bottom-1;k>top;k--){
+                   list.add(matrix[k][left]);
+                }
+            }
+            top++;left++;right--;bottom--;
+        }
+        return list;
+    }
+}
