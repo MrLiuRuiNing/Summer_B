@@ -1,0 +1,106 @@
+﻿日报格式:
+主  题：日报
+汇报人：汤磊
+日  期：2018年8月4日 星期五
+内  容：
+1.	今日学习了的内容：
+1）springboot的搭建与Redis
+2）两道算法
+3)搭建Redis
+2.没有解决的问题：
+3.	明天的学习计划：
+1)Springboot与Redis整合
+2）两道算法
+3）完成上传书的模块
+4.学习任务完成度： （50）%[注：0% ~ 100%]
+5.对自己今天学习的满意度：（4）分 [注：1-10分]
+因为封装时间太长没有时间整合
+附录：
+算法一
+
+给算法一
+
+将两个有序链表合并为一个新的有序链表并返回。新链表是通过拼接给定的两个链表的所有节点组成的。 
+
+示例：
+
+输入：1->2->4, 1->3->4
+输出：1->1->2->3->4->4
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+        
+        if(l1==null){
+            return l2;
+        }
+        else if(l2==null){
+            return l1;
+        }
+        ListNode h1=null;
+        ListNode q=null,p=null;
+        while(l1!=null&&l2!=null){
+            if(l1.val<l2.val){
+                q=l1;
+                l1=l1.next;
+            }
+            else{
+                q=l2;
+                l2=l2.next;
+            }
+            if(h1==null){
+                h1=q;
+                p=q;
+            }
+            else{
+                p.next=q;
+                p=p.next;
+            }
+        }
+        if(l1==null){
+            p.next=l2;
+        }
+        else{
+            p.next=l1;
+        }
+        return h1;
+    }
+}
+算法二
+给出 n 代表生成括号的对数，请你写出一个函数，使其能够生成所有可能的并且有效的括号组合。
+
+例如，给出 n = 3，生成结果为：
+
+[
+  "((()))",
+  "(()())",
+  "(())()",
+  "()(())",
+  "()()()"
+]
+class Solution {
+    public List<String> generateParenthesis(int n) {
+        List<String> res=new ArrayList<String>();
+        find(res,0,0,n,"");
+        return res;
+    }
+    public void find(List<String> res,int left,int right,int len,String s){
+        if(s.length()==len*2){
+            res.add(s);
+            return;
+        }
+        if(left<len){
+            find(res,left+1,right,len,s+"(");
+        }
+        if(right<left){
+            find(res,left,right+1,len,s+")");
+        }
+    }
+}
+【学习内容真实可靠，给自己的评分和完成度客观真实，不谦虚，不夸大】
