@@ -16,35 +16,14 @@
 6.对今天的学习做一句话的总结：头大
 附录：
 算法：
-题目：/*  找出数组中重复的数字
-    *   在一个长度为n 的数组里的所有数字都在0-n-1的范围内，数组中某些数字是重复的，但不知道有几个数字重复了
-    *   也不知道每个数字重复了几次，请找出数组中任意一个重复的数字。例如，如果输入长度为7的数组
-    *   {2，3，1，0，2，5，3}，那么对应的输出是重复的数字2或者3
-    *
-    *   解法一：先排序，后扫描  时间复杂度O（NlgN+N）
-    *   解法二：利用空间换取时间 用空间复杂度为O（N）的哈希表 时间复杂度为O（N）
-    *   解法三：利用一维数组下标连续，使下标和数据产生对应，查找冲突
-    * */
-//解法三代码实现
-    public int FindOne(int[]a){
-        int i=0,target=-1;
-        if(a==null||a.length<1) return -1;
-        for(;i<a.length;++i){
-            if(a[i]<0||a[i]>a.length-1) return -1;
-            while(a[i]!=i){
-                if(a[i]==a[a[i]]){ //找到冲突
-                    return target=a[i];
-                }
-                target=a[a[i]];
-                a[a[i]]=a[i];
-                a[i]=target;
-            }
-        }
-        return -1;
-    }
-    public static void main(String args[]){
-        int []a={2,3,1,0,2,5,3};
-        Main m=new Main();
-        int x=m.FindOne(a);
-        System.out.println(x);
-}
+题目：/*
+ * 一只青蛙一次可以跳上1级台阶，也可以跳上2级……它也可以跳上n级。
+ * 求该青蛙跳上一个n级的台阶总共有多少种跳法。
+ * */
+int[] a= {0,1,1,2,4};
+	public int JumpFloorII(int target) {
+		if(target<=0) return 0;
+		if(target<=3) return a[target+1];
+		else 
+		return this.JumpFloorII(target-1)*2;
+	}

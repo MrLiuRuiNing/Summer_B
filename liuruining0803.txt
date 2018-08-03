@@ -1,0 +1,48 @@
+主  题：日报
+汇报人：刘睿宁
+日  期：2018年8月3日 星期五
+内  容：
+1.	今日学习了的内容：
+1）	复习了集合知识
+2）	复习了之前讨论的知识
+2.	没有解决的问题：
+1）         框架没有学习
+
+3.	明天的学习计划：
+1）总结面试问题
+2）框架学习
+4.学习任务完成度： （50）%[注：0% ~ 100%]
+5.对自己今天学习的满意度：（4）分 [注：1-10分]
+6.对今天的学习做一句话的总结：面试很紧张，明天加油
+附录：
+算法：
+/*
+ * 把一个数组最开始的若干个元素搬到数组的末尾，我们称之为数组的旋转。 
+ * 输入一个非减排序的数组的一个旋转，输出旋转数组的最小元素。
+ * 例如数组{3,4,5,1,2}为{1,2,3,4,5}的一个旋转，该数组的最小值为1。
+ *  NOTE：给出的所有元素都大于0，若数组大小为0，请返回0。
+ * */
+public class array_rotate {
+	public int minNumberInRotateArray(int [] array) {
+	    if(array==null||array.length<=0) return 0;
+	    int i=0,j=array.length-1;
+	    while(j-i>1) {
+	    	if(array[(i+j)/2]>array[i]) {
+		    	i=(i+j)/2;
+		    }else if(array[(i+j)/2]<array[j]) {
+		    	j=(i+j)/2;
+		    }else {
+		    	j=this.findmin(array);
+		    	i=j-1;
+		    }
+	    }
+	    return array[j];
+    }
+	public int findmin(int[] array) {
+		int i=0;
+		for(i=0;array[i+1]>=array[i];++i) ;
+		return i+1;
+	}
+	
+
+}
