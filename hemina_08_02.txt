@@ -1,0 +1,109 @@
+主  题：日报
+汇报人：何米娜
+日  期：2018年8月2日 星期二
+内  容：
+1.今日学习了的内容：
+（1 JVM整体分享
+（2 shiro的bug
+（3 两道算法
+（4 Springboot的视频
+
+
+2.没有解决的问题：
+（1 shiro的bug
+
+
+
+3.明天的学习计划：
+（1 负责模块的分析
+（2 前两周的知识点复习
+
+4.学习任务完成度： （80）  %[注：0% ~ 100%]
+5.对自己今天学习的满意度：（8）分 [注：1-10分]
+6.对今天的学习做一句话的总结：
+	继续努力
+
+
+算法1：
+题目：输入一个整数数组，判断该数组是不是某二叉搜索树的后序遍历的结果。
+如果是则输出Yes,否则输出No。假设输入的数组的任意两个数字都互不相同。
+public class Solution {
+    //后序遍历 左右根  根的值大于右子树  根的小于左子树
+    public boolean VerifySquenceOfBST(int [] sequence) {
+        if(sequence.length==0) return false;
+        return IsTreeBST(sequence,0,sequence.length-1);
+    }
+    
+    public boolean IsTreeBST(int[] sequence,int start,int end){
+        if(start>=end) return true;  //迭代到最后一个元素
+        int i=start;
+        for(;i<end;i++){
+            if(sequence[i]>sequence[end]) break;
+        }
+        for(int j=i;j<end;j++){
+            if(sequence[j]<sequence[end]) return false;
+        }
+        return IsTreeBST(sequence,start,i-1)&& IsTreeBST(sequence,i,end-1);
+    }
+}
+
+算法2：
+题目：输入一颗二叉树的跟节点和一个整数，打印出二叉树中结点值的和为输入整数的所有路径。
+路径定义为从树的根结点开始往下一直到叶结点所经过的结点形成一条路径。(注意: 在返回值的
+import java.util.*;
+/**
+public class TreeNode {
+    int val = 0;
+    TreeNode left = null;
+    TreeNode right = null;
+
+    public TreeNode(int val) {
+        this.val = val;
+
+    }
+
+}
+*/
+public class Solution {
+    private ArrayList<ArrayList<Integer>> resultsList=new ArrayList<ArrayList<Integer>>();
+    
+    public ArrayList<ArrayList<Integer>> FindPath(TreeNode root,int target) {
+        if(root==null) return resultsList;
+        //记录当前的累计值
+        int cursum=0;
+        //记录当前所通过的路径值
+        int[] path=new int[100];
+        //记录当前路径的长度
+        int index=0;
+        isTargetPath(root,target,cursum,path,index);
+        return resultsList;
+    }
+    
+    public void isTargetPath(TreeNode root,int target,int cursum,int[] path,int index){
+       if(root==null) return;
+        cursum+=root.val;
+        path[index]=root.val;
+        index++;
+        // 当前已经是处于叶子节点，并且累计的和与target相等
+        if (cursum == target && root.left == null && root.right == null) {
+            //形成当前的路径
+            ArrayList<Integer> pathList = new ArrayList<Integer>();
+            for (int i = 0; i < index; i++) {
+                pathList.add(path[i]);
+            }
+             // 将得到的路径放在全局变量中
+            resultsList.add(pathList);
+            return;
+        }
+          
+        // 该节点有左子节点，前提还是要curSum 小于 target，否则递归就没有意义了
+        if (cursum < target && root.left != null) {
+           isTargetPath(root.left, target, cursum, path, index);
+        }
+          
+        // 右子节点
+        if (cursum < target && root.right != null) {
+            isTargetPath(root.right, target, cursum, path, index);
+        }
+    }
+}list中，数组长度大的数组靠前)
