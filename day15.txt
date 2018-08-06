@@ -1,0 +1,129 @@
+日报格式:
+主  题：日报
+汇报人：陈鑫
+日  期：2018年8月6日 星期一
+内  容：
+1.今日学习了的内容：
+1）9:00-10:30看了JVM的对象分配
+2）大致学会了用json
+2）代码实现了归并排序的另一种变形（求最小和）
+3）快速排序的加深学习
+2.没有解决的问题：
+1）JVM看的时间不够
+3.明天的学习计划：
+1）中午12：10-13:10复习线程基础
+2）下午18：15-19：00学习JVM的垃圾回收机制
+3）对比面试题，复习早上的学习的线程。
+4）看算法视频
+4.学习任务完成度： （80%）%[注：0% ~ 100%]
+5.对自己今天学习的满意度：（8）分 [注：1-10分]
+6.对今天的学习做一句话的总结：基础才是关键，往往学习的过程中忽略一些重点。
+
+附录：
+算法1：求最小数
+题目： 求一组序列（无序），每个数左边比自己小的数的数量
+{代码}
+package org.leftgod01.day02;
+
+/**
+ * @Auther: ch
+ * @Date: 2018/8/6 00:58
+ * @Description:    求一组序列（无序），每个数左边比自己小的数的数量
+ */
+public class MergeSortAndCountLess {
+
+    private static int cnt = 0;
+    public static void main(String[] args) {
+        int []arr = {3,2,5,8,4,9};
+        new MergeSortAndCountLess().sort(arr);
+        for (int i: arr) {
+            System.out.print(i + ", ");
+        }
+        System.out.println("-----------------");
+        System.out.println(cnt);
+    }
+    public void sort(int[] arr){
+        if (arr == null || arr.length <= 2) return;
+        divide(arr, 0, arr.length - 1);
+    }
+    public void divide(int[] arr, int L, int R){
+        if ( arr == null || L >= R){
+            return;
+        }
+        int mid = L + (R - L) / 2;
+        divide(arr, L, mid);
+        divide(arr, mid + 1, R);
+        merge(arr, L, mid, R);
+    }
+    /**
+     * 功能描述: 合并数组
+     *  {3,2,5,8,4,9}
+     */
+    public void merge(int []arr, int L, int mid,  int R){
+        int[] help = new int[R - L + 1]; //辅助数组
+        int low = L;
+        int high = mid + 1;
+        int i = 0;
+        while ( low <= mid && high <= R ){
+            if (arr[low] <= arr[high]){
+                help[i++] = arr[low++];
+                cnt += R - high + 1;
+            }else{                          // 左比右小， 那么从high位置起，它的右边的数都大于该数：(R - high + 1)
+                help[i++] = arr[high++];
+            }
+        }
+        while (low <= mid){
+            help[i++] = arr[low++];
+        }
+        while (high <= R){
+            help[i++] = arr[high++];
+        }
+        for (i = 0 ; i < help.length; ++i){
+            arr[i + L] = help[i];
+        }
+    }
+}
+
+算法1：快速排序（朴素算法）
+题目： 
+{代码}
+package org.sort;
+
+public class QuickSort01 {
+    // [....2, 5, 0, 3, 7, 9, 8, 4....]
+    public static void main(String[] args) {
+        int[] a = {6, 3, 8, 2, 1, 10, 5};
+        new QuickSort01().quicksort01(a, 0, 6);
+        for (int i : a) {
+            System.out.print(i + ",");
+        }
+    }
+    /**
+     * 经典快排（朴素算法）
+     * @param arr
+     * @param L
+     * @param R
+     */
+    public void quicksort01(int []arr, int L, int R){
+        if ((arr == null) || (R - L < 1)) return;
+        int mid = partition(arr, L, R);
+        quicksort01(arr, L, mid-1);
+        quicksort01(arr, mid +1, R);
+    }
+    public int partition(int []arr, int L, int R){
+        int less = L - 1;
+        while(L <= R){
+            if (arr[L] <= arr[R])  swap(arr, ++less, L);// 将小与等于基准的数放到前面来，并且less向后移动一个
+            L++;
+        }
+        return less;
+    }
+    public void swap(int []arr, int a, int b){
+        int t = arr[a];
+        arr[a] = arr[b];
+        arr[b] = t;
+    }
+
+}
+
+【学习内容真实可靠，给自己的评分和完成度客观真实，不谦虚，不夸大】
