@@ -1,0 +1,96 @@
+主  题：日报
+汇报人：何米娜
+日  期：2018年8月4日 星期六
+内  容：
+1.今日学习了的内容：
+（1 接口文档的初步了解,及编写
+（2 面试题的总结
+
+2.没有解决的问题：
+（1接口文档的编写
+
+3.明天的学习计划：
+（1接口文档的编写
+ (2两种排序
+
+4.学习任务完成度： （80）  %[注：0% ~ 100%]
+5.对自己今天学习的满意度：（8）分 [注：1-10分]
+6.对今天的学习做一句话的总结：
+	继续努力
+
+
+算法1：
+题目：package com.insert.rand;
+
+/**
+ * 插入排序
+ *
+ * 直接插入排序
+ * 时间复杂度O(n^2)  空间复杂度O(1)  稳定
+ *
+ * 1.将待排序的序列作为有序序列，把第二个元素到最后一个元素当做未排序的序列
+ * 2.从头到尾依次扫描未排序的序列，将扫描到的元素插入到有序序列的合适位置
+ * （如果待插入的元素与有序序列中的某个元素相等，则将待插入元素插入到相等元素的后面）
+ */
+public class InsertRank {
+    public static void main(String[] args){
+        int[] ints={3,2,5,8,4,7,6,9};
+        int[] res=insertrank(ints);
+        for(int i=0;i<res.length;i++){
+            System.out.print(res[i]+" ");
+        }
+    }
+
+    public static int[] insertrank(int[] ins){
+        for(int i=1;i<ins.length;i++){
+            int temp=ins[i];
+            for(int j=i;j>0&&(ins[j]<ins[j-1]);j--){ //遍历有序序列，比较带插入序列与有序序列中元素的大小，选择合适的插入位置
+                ins[j]=ins[j-1];
+                ins[j-1]=temp;
+            }
+        }
+        return ins;
+    }
+
+}
+算法2：输入一棵二叉搜索树，将该二叉搜索树转换成一个排序的双向链表。要求不能创建任何新的结点，只能调整树中结点指针的指向
+/**
+public class TreeNode {
+    int val = 0;
+    TreeNode left = null;
+    TreeNode right = null;
+
+    public TreeNode(int val) {
+        this.val = val;
+
+    }
+
+}
+*/
+/**
+利用中序遍历链表
+将原先指向左结点的指针指向双向链表的前一个结点
+将原先指向右结点的指针指向双向链表的后一个结点
+*/
+public class Solution {
+     TreeNode head = null;
+     TreeNode realHead = null;
+    public TreeNode Convert(TreeNode pRootOfTree) {
+        ConvertSub(pRootOfTree);
+        return realHead;
+    }
+     
+    private void ConvertSub(TreeNode pRootOfTree) {
+        if(pRootOfTree==null) return;
+        ConvertSub(pRootOfTree.left);
+        if (head == null) {
+            head = pRootOfTree;
+            realHead = pRootOfTree;
+        } else {
+            head.right = pRootOfTree;
+            pRootOfTree.left = head;
+            head = pRootOfTree;
+        }
+        ConvertSub(pRootOfTree.right);
+    }
+}

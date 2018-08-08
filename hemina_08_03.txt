@@ -1,0 +1,71 @@
+主  题：日报
+汇报人：何米娜
+日  期：2018年8月3日 星期五
+内  容：
+1.今日学习了的内容：
+（1 负责模块的分析
+（2 前两周的知识点复习
+
+2.没有解决的问题：
+
+
+3.明天的学习计划：
+
+4.学习任务完成度： （80）  %[注：0% ~ 100%]
+5.对自己今天学习的满意度：（8）分 [注：1-10分]
+6.对今天的学习做一句话的总结：
+	继续努力
+
+
+算法1：
+题目：输入一个复杂链表（每个节点中有节点值，以及两个指针，一个指向下一个节点
+另一个特殊指针指向任意一个节点），返回结果为复制后复杂链表的head。
+注意，输出结果中请不要返回参数中的节点引用，否则判题程序会直接返回空）
+/*
+public class RandomListNode {
+    int label;
+    RandomListNode next = null;
+    RandomListNode random = null;
+
+    RandomListNode(int label) {
+        this.label = label;
+    }
+}
+*/
+public class Solution {
+    public RandomListNode Clone(RandomListNode pHead)
+    {
+        if(pHead==null) return null;
+        RandomListNode pcur=pHead;
+        //复制节点，及next指针   A->B->C 变成A->A'->B->B'->C->C'
+        while(pcur!=null){
+            RandomListNode node=new RandomListNode(pcur.label);
+            pcur.next=node.next;
+            pcur.next=node;
+            pcur=node.next;
+        }
+        pcur=pHead;
+        //复制节点的random指针
+        while(pcur!=null){
+            if(pcur.random!=null){
+              pcur.next.random= pcur.random.next;
+              pcur=pcur.next.next;
+            }
+        }
+        //指向复制的头结点
+        RandomListNode head = pHead.next;
+        //指向复制的头结点
+        RandomListNode cur = head;
+        //指向原始的头结点
+        pcur = pHead;
+        //拆分链表
+        while(pcur!=null){
+            pcur.next = pcur.next.next;
+            if(cur.next!=null)
+                cur.next = cur.next.next;
+            cur = cur.next;
+            pcur = pcur.next;
+        }
+        return head;   
+    }
+}
