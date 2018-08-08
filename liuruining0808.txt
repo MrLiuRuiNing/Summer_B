@@ -1,0 +1,54 @@
+主  题：日报
+汇报人：刘睿宁
+日  期：2018年8月8日 星期三
+内  容：
+1.	今日学习了的内容：
+1）	偏向锁，轻量级锁与重量级锁
+2）	完成了4个接口的编码
+2.	没有解决的问题：
+1）        还有一个多表连接查询的接口没有写
+
+3.	明天的学习计划：
+1）spring
+4.学习任务完成度： （50）%[注：0% ~ 100%]
+5.对自己今天学习的满意度：（4）分 [注：1-10分]
+6.对今天的学习做一句话的总结：多线程要学的好多啊
+附录：
+算法：
+/*
+ * 按照“之”字形式打印二维数组
+ * 
+ * */
+public class zhizi_print {
+
+	public void test_print(int[][] array) {
+		int i = 0, j = 0, a = 0, b = 0;
+		boolean bool = true;	
+		while (b < array[0].length) {
+			int ta=0,tb=0;
+			if (bool) {
+				for(ta = i,tb = j;ta>=b||tb<=a;ta--,tb++)
+					System.out.print(array[tb][ta] + " ");
+				bool = false;
+			} else {
+				for(ta = a,tb = b;ta>=j||tb<=i;tb++,ta--)
+					System.out.print(array[ta][tb] + " ");
+				bool = true;
+			}
+			if (i < array[0].length-1)
+				i++;
+			else
+				j++;
+			if(a<array.length-1)  a++;
+			else b++;
+		}
+	}
+
+	public static void main(String[] args) {
+		int[][] a = { { 3, 2, 5, 4 }, { 7, 9, 6, 3 }, { 2, 5, 4, 3 }, { 8, 9, 7, 1 },{1,3,2,4} };
+		System.out.println(a.length+"  "+a[0].length);
+		zhizi_print z = new zhizi_print();
+		z.test_print(a);
+	}
+
+}
