@@ -1,0 +1,79 @@
+日报格式:
+主  题：日报
+汇报人：陈鑫
+日  期：2018年8月9日 星期四
+内  容：
+1.今日学习了的内容：
+1）早上7:30-9:00看JVM的第十二章
+2）早上9：00-10：30学习了算法
+3）下午20：00-22:00加深了HashMap的学习
+2.没有解决的问题：
+1）没有进行Spring学习
+3.明天的学习计划：
+1）早上7:30-9:00看JVM
+2）下午加深Spring的学习
+3）再次复习HashMap和Hashtable.
+4.学习任务完成度： （80%）%[注：0% ~ 100%]
+5.对自己今天学习的满意度：（8）分 [注：1-10分]
+6.对今天的学习做一句话的总结：基础才是关键，往往学习的过程中忽略一些重点。
+附录：
+{代码}：
+package org.leftgod01.day04;
+
+/**
+ * @Auther: chenxin
+ * @Date: 2018/8/9 
+ * @Description: 桶排序扩展————排序后的最大相邻数差值问题
+ */
+public class BucketSort {
+    public static void main(String[] args) {
+        int[] arr = {17, 13, 0, 41, 49, 69};
+        int result = new BucketSort().sort(arr);
+        System.out.println(result);
+    }
+    public int sort(int[] arr){
+        if (arr == null || arr.length < 2)
+            return 0;
+        int n = arr.length;
+        int max = Integer.MIN_VALUE;
+        int min = Integer.MAX_VALUE;
+        // 求出最小值和最大值
+        for(int i=0; i< n ; ++i){
+            max = Integer.max(arr[i], max);
+            min = Integer.min(arr[i], min);
+        }
+        if (max == min) return 0;
+        //
+        boolean[] hasNumber = new boolean[n + 1]; // 记录桶中有没有元素
+        int[] maxs = new int[n + 1];              // 每个桶中最大的元素
+        int[] mins = new int[n + 1];              // 每个桶中最小的元素
+        int bid;
+        for (int i=0; i<n; ++i){
+            bid = bucket(arr[i], n, max, min); // 计算出元素位于那个桶
+            maxs[bid] = hasNumber[bid] ? Math.max(arr[i] , maxs[bid]):arr[i];
+            mins[bid] = hasNumber[bid] ? Math.min(arr[i] , mins[bid]):arr[i];
+            hasNumber[bid] = true;
+        }
+        int lastMax = maxs[0]; // 存放上一个非空桶的最大值
+        int res = 0;           // 记录最大差值
+        for ( int i=0; i<=n; ++i){
+            if (hasNumber[i]){ // 桶非空
+                res  = Math.max(res, mins[i] - lastMax);
+                lastMax = maxs[i];
+            }
+        }
+        return res;
+
+
+    }
+    /**
+     *@描述 计算元素在桶中的位置（在哪个桶里面）
+     *@param
+     * @return:
+     */
+    public int bucket(long number,long n, long max, long min){
+        return (int) ((int)(number - min) * n / (max - min));
+    }
+
+
+}
